@@ -1,8 +1,10 @@
 package com.skypro.emploee.controller;
 
+import com.skypro.emploee.exception.InvalidEmployeeRequestException;
 import com.skypro.emploee.model.Employee;
 import com.skypro.emploee.record.EmployeeRequest;
 import com.skypro.emploee.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -18,10 +20,17 @@ public class EmployeeController {
     public Collection<Employee> getAllEmployee (){
         return this.employeeService.getAllEmployees();
     }
+
     @PostMapping ("/employees")
-    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) {
-        return this.employeeService.addEmployee(employeeRequest);
+    public Object createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        try {
+            return ResponseEntity.ok(this.employeeService.addEmployee(employeeRequest));
+        } catch (InvalidEmployeeRequestException e) {
+            System.out.println("e");
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping ("/employees/salary/sum")
     public int getSalarySum() {
         return this.employeeService.getSalarySum();

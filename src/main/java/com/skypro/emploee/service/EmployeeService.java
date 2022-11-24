@@ -3,6 +3,7 @@ package com.skypro.emploee.service;
 import com.skypro.emploee.exception.EmployeeNotFoundException;
 import com.skypro.emploee.model.Employee;
 import com.skypro.emploee.record.EmployeeRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,12 +16,13 @@ public class EmployeeService {
     public Collection<Employee> getAllEmployees() {
         return this.employees.values();
     }
+
     public Employee addEmployee(EmployeeRequest employeeRequest) {
-        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new IllegalArgumentException("Employee should be set");
+        if (!org.apache.commons.lang3.StringUtils.isAlpha(employeeRequest.getFirstName()) || !StringUtils.isAlpha(employeeRequest.getLastName())) {
+            throw new InvalidPropertiesFormatException();
         }
-        Employee employee = new Employee(employeeRequest.getFirstName(),
-                employeeRequest.getLastName(),
+        Employee employee = new Employee(org.apache.commons.lang3.StringUtils.capitalize(employeeRequest.getFirstName()),
+                org.apache.commons.lang3.StringUtils.capitalize(employeeRequest.getLastName()),
                 employeeRequest.getDepartment(),
                 employeeRequest.getSalary());
         this.employees.put(employee.getId(),employee);
