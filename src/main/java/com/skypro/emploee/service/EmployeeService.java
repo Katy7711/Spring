@@ -18,9 +18,9 @@ public class EmployeeService {
         return this.employees.values();
     }
 
-    public Employee addEmployee(EmployeeRequest employeeRequest) throws InvalidPropertiesFormatException {
+    public Employee addEmployee(EmployeeRequest employeeRequest){
         if (!org.apache.commons.lang3.StringUtils.isAlpha(employeeRequest.getFirstName()) || !StringUtils.isAlpha(employeeRequest.getLastName()))
-            throw new InvalidPropertiesFormatException("Имя и фамилия должны содержать только буквы");
+            throw new RuntimeException( "Имя и фамилия должны содержать только буквы");
 
         Employee employee = new Employee(org.apache.commons.lang3.StringUtils.capitalize(employeeRequest.getFirstName()),
                 org.apache.commons.lang3.StringUtils.capitalize(employeeRequest.getLastName()),

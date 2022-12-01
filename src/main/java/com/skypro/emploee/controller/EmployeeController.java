@@ -26,7 +26,7 @@ public class EmployeeController {
     public Object createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         try {
             return ResponseEntity.ok(this.employeeService.addEmployee(employeeRequest));
-        } catch (InvalidPropertiesFormatException e) {
+        } catch (RuntimeException e) {
             System.out.println("e");
             return ResponseEntity.badRequest().build();
         }
