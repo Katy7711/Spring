@@ -84,16 +84,16 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void whenNoEmployeesThanMinSalaryException() {
-        when(employeeService.getAllEmployees()).thenReturn(List.of());
-        Assertions.assertThatThrownBy(() -> employeeService.getEmployeeWithMinSalary())
+    public void ifNoEmployeesThanMinSalaryException() {
+        EmployeeService employeeService = new EmployeeService();
+        Assertions.assertThatThrownBy(employeeService::getEmployeeWithMinSalary)
                 .isInstanceOf(EmployeeNotFoundException.class);
     }
 
     @Test
-    public void whenNoEmployeesThanMaxSalaryException() {
-        when(employeeService.getAllEmployees()).thenReturn(List.of());
-        Assertions.assertThatThrownBy(() -> employeeService.getEmployeeWithMaxSalary())
+    public void ifNoEmployeesThanMaxSalaryException() {
+        EmployeeService employeeService = new EmployeeService();
+        Assertions.assertThatThrownBy(employeeService::getEmployeeWithMaxSalary)
                 .isInstanceOf(EmployeeNotFoundException.class);
     }
 }

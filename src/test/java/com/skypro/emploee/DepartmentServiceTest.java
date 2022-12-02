@@ -44,7 +44,7 @@ public class DepartmentServiceTest {
     @Test
     void getEmployeesByDepartment() {
         Collection<Employee> employeesByDepartment = this.departmentService.getDepartmentEmployees(2);
-        Assertions.assertThat(employees).hasSize(2).contains(employees.get(1), (employees.get(5)));
+        Assertions.assertThat(employeesByDepartment).hasSize(2).contains(employees.get(1), (employees.get(5)));
     }
 
     @Test

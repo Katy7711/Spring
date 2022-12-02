@@ -55,7 +55,7 @@ public class EmployeeService {
        return employees.values().stream().filter(e->e.getSalary() > averageSalary).collect(Collectors.toList());
     }
     public Employee removeEmployee(int id) {
-        return removeEmployee(id);
+        return employees.remove(id);
     }
 
     private Double getAverageSalary (){
