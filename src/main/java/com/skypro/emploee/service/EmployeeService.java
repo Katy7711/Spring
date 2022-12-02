@@ -4,6 +4,7 @@ import com.skypro.emploee.exception.EmployeeNotFoundException;
 import com.skypro.emploee.model.Employee;
 import com.skypro.emploee.record.EmployeeRequest;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,10 +18,10 @@ public class EmployeeService {
         return this.employees.values();
     }
 
-    public Employee addEmployee(EmployeeRequest employeeRequest) {
-        if (!org.apache.commons.lang3.StringUtils.isAlpha(employeeRequest.getFirstName()) || !StringUtils.isAlpha(employeeRequest.getLastName())) {
-            throw new InvalidPropertiesFormatException();
-        }
+    public Employee addEmployee(EmployeeRequest employeeRequest){
+        if (!org.apache.commons.lang3.StringUtils.isAlpha(employeeRequest.getFirstName()) || !StringUtils.isAlpha(employeeRequest.getLastName()))
+            throw new RuntimeException( "Имя и фамилия должны содержать только буквы");
+
         Employee employee = new Employee(org.apache.commons.lang3.StringUtils.capitalize(employeeRequest.getFirstName()),
                 org.apache.commons.lang3.StringUtils.capitalize(employeeRequest.getLastName()),
                 employeeRequest.getDepartment(),
@@ -46,12 +47,15 @@ public class EmployeeService {
                 .orElseThrow(EmployeeNotFoundException::new);
         }
 
-    public List<Employee> getEmployeeWithHighSalary() {
+    public List<Employee> getEmployeesWithSalaryMoreThanAverage() {
        Double averageSalary = getAverageSalary();
        if (averageSalary == null) {
            return Collections.emptyList();
        }
        return employees.values().stream().filter(e->e.getSalary() > averageSalary).collect(Collectors.toList());
+    }
+    public Employee removeEmployee(int id) {
+        return employees.remove(id);
     }
 
     private Double getAverageSalary (){

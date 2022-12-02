@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class EmployeeController {
     public Object createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         try {
             return ResponseEntity.ok(this.employeeService.addEmployee(employeeRequest));
-        } catch (InvalidEmployeeRequestException e) {
+        } catch (RuntimeException e) {
             System.out.println("e");
             return ResponseEntity.badRequest().build();
         }
@@ -45,6 +46,6 @@ public class EmployeeController {
     }
     @GetMapping ("/employees/salary/highSalary")
     public List<Employee> getEmployeeWithHighSalary() {
-        return this.employeeService.getEmployeeWithHighSalary();
+        return this.employeeService.getEmployeesWithSalaryMoreThanAverage();
     }
 }
